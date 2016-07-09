@@ -41,7 +41,7 @@ defmodule Currying.Mixfile do
       files: ["lib", "mix.exs", "README*",  "LICENSE*"],
       maintainers: ["Qqwy/Wiebe-Marten"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/qqwy/elixir_currying"} 
+      links: %{Github: "https://github.com/qqwy/elixir_currying"} 
     ]
   end
 
