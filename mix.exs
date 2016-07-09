@@ -31,7 +31,8 @@ defmodule Currying.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:dialyxir, "~> 0.3", only: [:dev]}
+      {:dialyxir, "~> 0.3", only: [:dev]},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
