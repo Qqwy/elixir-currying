@@ -27,6 +27,17 @@ defmodule Currying.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:dialyxir, "~> 0.3", only: [:dev]}
+    ]
+  end
+
+  def package do
+    [
+      files: ["lib", "mix.exs", "README*",  "LICENSE*"],
+      maintainers: ["Qqwy/Wiebe-Marten"],
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/qqwy/elixir_currying"} 
+    ]
   end
 end

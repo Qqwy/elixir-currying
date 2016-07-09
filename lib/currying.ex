@@ -57,6 +57,7 @@ defmodule Currying do
       iex> curry(pythagorean_triple?) |> curry_many([3,4,5]) # This is equivalent to the statement above.
       true
   """
+  @spec curry_many(function, list) :: any 
   def curry_many(fun, arguments)
   def curry_many(fun, []), do: curry(fun)
 
@@ -108,6 +109,7 @@ defmodule Currying do
       3
 
   """
+  @spec curry(function) :: (any -> any)
   def curry(fun) when is_function(fun) do
     fn 
       later_argument ->
@@ -121,6 +123,7 @@ defmodule Currying do
   
   
   """
+  @spec curry(function, any) :: any
   def curry(fun, argument)
 
   def curry(fun, argument) when is_function(fun) do
@@ -133,6 +136,7 @@ defmodule Currying do
   
   To enable the usage of this operator, call `use Currying, operator: true`.
   """
+  @spec function ~> any :: any
   def fun ~> argument when is_function(fun) do
     curry(fun, argument)
   end
