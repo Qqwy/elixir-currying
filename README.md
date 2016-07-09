@@ -1,5 +1,9 @@
 # Currying
 
+
+[![hex.pm version](https://img.shields.io/hexpm/v/currying.svg)](https://hex.pm/packages/currying)
+
+
 The Currying library allows you to partially apply (or '[curry](https://en.wikipedia.org/wiki/Currying)') _any_ Elixir function, in a very transparent way.
 
 This is useful if you only know what part of the arguments are going to be at this time. 
