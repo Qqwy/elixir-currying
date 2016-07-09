@@ -1,5 +1,7 @@
 defmodule CurryingTest do
   use ExUnit.Case
+  
+  use Currying, operator: true
   doctest Currying
 
   test "the truth" do
