@@ -5,7 +5,7 @@ defmodule Currying do
 
   If you want to use the shorthand curry operator `~>` for convenience, call `use Currying, operator: true`.
   
-  ## Currying
+  ## How to Curry
 
   You can create a curried version of a function by using `curry/1`. It is also possible to create already-partially-applied functions 
   by using `curry/2` or `curry_many/2`.

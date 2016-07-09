@@ -1,24 +1,38 @@
 # Currying
 
-**TODO: Add description**
+The Currying library allows you to partially apply (or 'curry') functions.
+To use this functionality elsewhere, call `use Currying` from within your code.
+
+If you want to use the shorthand curry operator `~>` for convenience, call `use Currying, operator: true`.
+
+## How to Curry
+
+You can create a curried version of a function by using `curry/1`. It is also possible to create already-partially-applied functions 
+by using `curry/2` or `curry_many/2`.
+
+Application of these functions can be done by calling the functions with a new argument, such as:
+
+  ```elixir
+  iex> enum_map = curry(&Enum.map/2)
+  iex> partially_applied_enum_map = enum_map.([1,2,3])
+  iex> results = partially_applied_enum_map.(fn x -> x*x end)
+  [1,4,9]    
+  ```
+
+It is also possible to call `curry` or `curry_many` again on an already-curried function, without any problem.
+
+When new arguments are passed to these functions, the partially applied function will be filled in one-by-one.
+
+
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `currying` to your list of dependencies in `mix.exs`:
+  - Add `currying` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
       [{:currying, "~> 0.1.0"}]
     end
     ```
-
-  2. Ensure `currying` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:currying]]
-    end
-    ```
-
