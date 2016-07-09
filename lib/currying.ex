@@ -50,11 +50,13 @@ defmodule Currying do
       iex> pythagorean_triple? = fn x, y, z -> x*x+y*y == z*z end
       iex> curry_many(pythagorean_triple?, [3,4,5])
       true
-      iex> curry_many(pythagorean_triple?, [3,4]).(5)   # This is equivalent to the statement above.
-      iex> curry_many(pythagorean_triple?, [3]).(4).(5) # This is equivalent to the statement above.
-      iex> curry_many(pythagorean_triple?, []).(3).(4).(5) # This is equivalent to the statement above.
-      iex> curry(pythagorean_triple?).(3).(4).(5) # This is equivalent to the statement above.
-      iex> curry(pythagorean_triple?) |> curry_many([3,4,5]) # This is equivalent to the statement above.
+      iex> curry_many(pythagorean_triple?, [3,4]).(5)          # This is equivalent to the statement above.
+      iex> curry_many(pythagorean_triple?, [3]).(4).(5)        # This is equivalent to the statement above.
+      iex> curry_many(pythagorean_triple?, []).(3).(4).(5)     # This is equivalent to the statement above.
+      iex> curry(pythagorean_triple?).(3).(4).(5)              # This is equivalent to the statement above.
+      iex> curry(pythagorean_triple?) |> curry_many([3,4,5])   # This is equivalent to the statement above.
+      iex> curry(pythagorean_triple?).(3) |> curry_many([4,5]) # This is equivalent to the statement above.
+      iex> curry(pythagorean_triple?, 3) |> curry_many([4,5])  # This is equivalent to the statement above.
       true
   """
   @spec curry_many(function, list) :: any 
