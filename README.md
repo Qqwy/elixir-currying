@@ -2,7 +2,7 @@
 
 
 [![hex.pm version](https://img.shields.io/hexpm/v/currying.svg)](https://hex.pm/packages/currying)
-
+[![Build Status](https://travis-ci.org/Qqwy/elixir_currying.svg?branch=master)](https://travis-ci.org/Qqwy/elixir_currying)
 
 The Currying library allows you to partially apply (or '[curry](https://en.wikipedia.org/wiki/Currying)') _any_ Elixir function, in a very transparent way.
 
