@@ -46,10 +46,8 @@ defmodule Currying.Mixfile do
 
   defp description do
     """
-    The Currying library allows you to partially apply (or '[curry](https://en.wikipedia.org/wiki/Currying)') _any_ Elixir function, in a very transparent way.
+    The Currying library allows you to partially apply (or 'curry') any Elixir function, in a very transparent way.
     It also optionally implements the infix operator `~>` as a synomym for currying.
-
-    Currying is useful if you only know what part of the arguments are going to be at this time. Currying is also a prerequisite when working with algebraic data types. 
     """
   end
 end
