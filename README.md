@@ -1,6 +1,28 @@
 # Currying
 
-The Currying library allows you to partially apply (or 'curry') functions.
+The Currying library allows you to partially apply (or '[curry](https://en.wikipedia.org/wiki/Currying)') _any_ Elixir function, in a very transparent way.
+
+This is useful if you only know what part of the arguments are going to be at this time. 
+The main advantage of Currying over Elixir's normal anonymous function syntax, is that you can stepwise insert more and more arguments, instead of having to supply them right away. 
+
+This becomes even more useful when working with algebraic data types; Currying allows things like applicative functors to exist.
+
+
+## Installation
+
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+
+  - Add `currying` to your list of dependencies in `mix.exs`:
+
+    ```elixir
+    def deps do
+      [{:currying, "~> 0.1.0"}]
+    end
+    ```
+
+
+## Usage
+
 To use this functionality elsewhere, call `use Currying` from within your code.
 
 If you want to use the shorthand curry operator `~>` for convenience, call `use Currying, operator: true`.
@@ -25,14 +47,3 @@ When new arguments are passed to these functions, the partially applied function
 
 
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
-
-  - Add `currying` to your list of dependencies in `mix.exs`:
-
-    ```elixir
-    def deps do
-      [{:currying, "~> 0.1.0"}]
-    end
-    ```

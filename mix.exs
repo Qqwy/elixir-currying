@@ -3,11 +3,14 @@ defmodule Currying.Mixfile do
 
   def project do
     [app: :currying,
-     version: "0.1.0",
+     version: "1.0.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     package: package(),
+     description: description()
+   ]
   end
 
   # Configuration for the OTP application
@@ -39,5 +42,14 @@ defmodule Currying.Mixfile do
       licenses: ["MIT"],
       links: %{github: "https://github.com/qqwy/elixir_currying"} 
     ]
+  end
+
+  defp description do
+    """
+    The Currying library allows you to partially apply (or '[curry](https://en.wikipedia.org/wiki/Currying)') _any_ Elixir function, in a very transparent way.
+    It also optionally implements the infix operator `~>` as a synomym for currying.
+
+    Currying is useful if you only know what part of the arguments are going to be at this time. Currying is also a prerequisite when working with algebraic data types. 
+    """
   end
 end
