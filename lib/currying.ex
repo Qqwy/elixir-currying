@@ -4,7 +4,8 @@ defmodule Currying do
   To use this functionality elsewhere, call `use Currying` from within your code.
 
   If you want to use the shorthand curry operator `~>` for convenience, call `use Currying, operator: true`.
-  
+  (If you do not, just use `import Currying` or call `Currying.curry/1` directly)
+
   ## How to Curry
 
   You can create a curried version of a function by using `curry/1`. It is also possible to create already-partially-applied functions 
@@ -22,9 +23,8 @@ defmodule Currying do
   When new arguments are passed to these functions, the partially applied function will be filled in one-by-one.
 
   """
-
   defmacro __using__(opts) do
-    if opts[:operator] do
+    if Keyword.get(opts, :operator, false) do
       quote do
         import Currying
       end
@@ -35,7 +35,6 @@ defmodule Currying do
     end
   end
 
-
   @doc """
   Creates a curried version of the given function `fun`, and fills in all arguments in the `arguments` list.
 
@@ -43,7 +42,6 @@ defmodule Currying do
   If the arity of `fun` is more than the amount of arguments, a curried version of this function will be returned.
 
   When you pass more arguments into `curry_many` than the original curried function supported, an error will be thrown.
-
 
   ## Examples
 
@@ -59,35 +57,35 @@ defmodule Currying do
       iex> curry(pythagorean_triple?, 3) |> curry_many([4,5])  # This is equivalent to the statement above.
       true
   """
-  @spec curry_many(function, list) :: any 
+  @spec curry_many(function, list) :: any
   def curry_many(fun, arguments)
   def curry_many(fun, []), do: curry(fun)
 
-  def curry_many(fun, arguments = [h | t]) when is_function(fun) do
-    {:arity, arity} = :erlang.fun_info(fun, :arity) 
+  def curry_many(fun, arguments = [first_argument | rest_arguments]) when is_function(fun) do
+    {:arity, arity} = :erlang.fun_info(fun, :arity)
     argument_length = length(arguments)
 
     case arity - argument_length do
       0 ->
         Kernel.apply(fun, arguments)
-      num when num < 0 ->
-      # Try to apply one by one; function probably has been curried multiple times.
-        if is_function(fun, 1) do
-          curried_fun = fun.(h)
+      num when num > 0 ->
+        fn
+          later_argument ->
+            curry_many(fun, arguments ++ [later_argument])
+        end
+      _ ->
+        # Try to apply one by one; function probably has been curried multiple times.
+        if arity == 1 do
+          curried_fun = fun.(first_argument)
           if is_function(curried_fun, 1) do
-            curry_many(curried_fun, t)
+            curry_many(curried_fun, rest_arguments)
           else
             # not curryable.
-            raise BadArityError.exception(function: curried_fun, args: t) #"Too many parameters supplied to `curry_many`!"
+            raise BadArityError.exception(function: curried_fun, args: rest_arguments) #"Too many parameters supplied to `curry_many`!"
           end
         else
           # not curryable
           raise BadArityError.exception(function: fun, args: arguments) #"Too many parameters supplied to `curry_many`!"
-        end
-      _ ->
-        fn
-          later_argument ->
-            curry_many(fun, arguments ++ [later_argument])
         end
     end
   end
@@ -95,7 +93,7 @@ defmodule Currying do
   @doc """
   Creates a curried version of the given function `fun`.
 
-  This curried version only responds to a single argument. When it is called using this argument, 
+  This curried version only responds to a single argument. When it is called using this argument,
   the first argument of the original function is filled in, and a new curried version of the function is returned.
 
   When enough arguments have been passed in so that the amount of arguments matches the arity of the original function,
@@ -114,17 +112,14 @@ defmodule Currying do
   """
   @spec curry(function) :: (any -> any)
   def curry(fun) when is_function(fun) do
-    fn 
+    fn
       later_argument ->
         curry_many(fun, [later_argument])
     end
   end
 
-
   @doc """
   Creates a curried version of the given function `fun`, with its first `argument` already filled in.
-  
-  
   """
   @spec curry(function, any) :: any
   def curry(fun, argument)
@@ -133,10 +128,9 @@ defmodule Currying do
     curry_many(fun, [argument])
   end
 
-
   @doc """
   Infix variant of `curry(fun, argument)`
-  
+
   To enable the usage of this operator, call `use Currying, operator: true`.
   """
   @spec function ~> any :: any

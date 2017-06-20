@@ -51,3 +51,7 @@ When new arguments are passed to these functions, the partially applied function
 
 
 
+## History
+
+- 1.0.3 - Speed improvements.
+- 1.0.2 - Stable Release
