@@ -14,9 +14,9 @@ defmodule Currying do
 
       iex> enum_map = curry(&Enum.map/2)
       iex> partially_applied_enum_map = enum_map.([1,2,3])
-      iex> results = partially_applied_enum_map.(fn x -> x*x end)
-      [1,4,9]    
-  
+      iex> partially_applied_enum_map.(fn x -> x*x end)
+      [1,4,9]
+
   It is also possible to call `curry` or `curry_many` again on an already-curried function, without any problem.
 
   When new arguments are passed to these functions, the partially applied function will be filled in one-by-one.
