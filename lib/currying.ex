@@ -66,11 +66,12 @@ defmodule Currying do
   def curry_many(fun, arguments = [h | t]) when is_function(fun) do
     {:arity, arity} = :erlang.fun_info(fun, :arity) 
     argument_length = length(arguments)
-    cond do
-      arity == argument_length ->
+
+    case arity - argument_length do
+      0 ->
         Kernel.apply(fun, arguments)
-      arity < argument_length ->
-        # Try to apply one by one; function probably has been curried multiple times.
+      num when num < 0 ->
+      # Try to apply one by one; function probably has been curried multiple times.
         if is_function(fun, 1) do
           curried_fun = fun.(h)
           if is_function(curried_fun, 1) do
@@ -83,7 +84,7 @@ defmodule Currying do
           # not curryable
           raise BadArityError.exception(function: fun, args: arguments) #"Too many parameters supplied to `curry_many`!"
         end
-      arity > argument_length ->
+      _ ->
         fn
           later_argument ->
             curry_many(fun, arguments ++ [later_argument])
